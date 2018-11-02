@@ -1,0 +1,50 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "env": {
+    "jest": true,
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb",
+    "prettier"
+  ],
+  "rules": {
+    "quotes": [
+      2,
+      "single"
+    ],
+    "react/jsx-filename-extension": "off",
+    "react/jsx-wrap-multilines": "off",
+    "react/prefer-stateless-function": "off",
+    "semi": [
+      2,
+      "always"
+    ],
+    "no-console": "off",
+    "react/no-unescaped-entities": "off",
+    "camelcase": "off",
+    "comma-dangle": "off",
+    "no-restricted-syntax": [
+      "error",
+      "LabeledStatement",
+      "WithStatement"
+    ],
+    "arrow-parens": [
+      "error",
+      "as-needed"
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "singleQuote": true
+      }
+    ]
+  },
+  "plugins": [
+    "prettier"
+  ]
+}
