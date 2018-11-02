@@ -19,6 +19,7 @@
     ],
     "react/jsx-filename-extension": "off",
     "react/jsx-wrap-multilines": "off",
+    "react/react-in-jsx-scope": "off",
     "react/prefer-stateless-function": "off",
     "semi": [
       2,

@@ -4,7 +4,10 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "indexer": "node scripts/indexer.js"
+        "indexer": "node scripts/indexer.js",
+        "dev": "next",
+        "build": "next build",
+        "start": "next start"
     },
     "author": "Matt Biddulph",
     "license": "ISC",
@@ -15,6 +18,7 @@
         "moment": "^2.22.2",
         "next": "^7.0.2",
         "react": "^16.6.0",
-        "react-dom": "^16.6.0"
+        "react-dom": "^16.6.0",
+        "react-lunr": "^0.3.0"
     }
 }
