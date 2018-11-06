@@ -23,6 +23,11 @@ yarn-debug.log*
 yarn-error.log*
 
 static/photos/*.jpg
+static/photos/*.png
+static/photos/*.mov
+static/photos/*.gif
+static/photos/*.mp4
+static/photos/*.m4v
 static/data/*.json
 
 .*.sw*
