@@ -19,7 +19,8 @@
         "lunr": "^2.3.5",
         "moment": "^2.22.2",
         "next": "^7.0.2",
-        "react": "^16.6.0",
+        "react": "^16.6.3",
+        "react-debounce-input": "^3.2.0",
         "react-dom": "^16.6.0"
     }
 }

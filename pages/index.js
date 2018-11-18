@@ -1,57 +1,58 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import 'isomorphic-fetch';
-import { Lunr } from 'react-lunr';
-import { Formik } from 'formik';
+import lunr from 'lunr';
+import { DebounceInput } from 'react-debounce-input';
+
 import search_index from '../static/data/search_index.json';
 import search_store from '../static/data/search_store.json';
 
-const index = JSON.stringify(search_index);
-const store = JSON.stringify(search_store);
+export class Search extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      lunr: lunr.Index.load(search_index)
+    };
+  }
+
+  render() {
+    const result = this.state.lunr.search(this.props.query);
+    return <div>{result.map(this.props.children)}</div>;
+  }
+}
 
 export default class extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      query: 'ariel'
+    };
+  }
+
   render() {
     return (
-      <Lunr index={index} store={store}>
-        {({ results, setQuery }) => {
-          console.log(results);
-          return (
-            <>
-              <Formik
-                initialValues={{ query: '' }}
-                onSubmit={(values, { setSubmitting }) => {
-                  setQuery(values.query);
-                  setSubmitting(false);
-                }}
-                render={({
-                  values,
-                  handleSubmit,
-                  handleChange,
-                  handleBlur
-                }) => (
-                  <form onSubmit={handleSubmit}>
-                    <input
-                      name="query"
-                      onBlur={handleBlur}
-                      onChange={handleChange}
-                      value={values.query}
-                    />
-                  </form>
-                )}
-              />
-              <h1>Results</h1>
-              <ul>
-                {results.map(result => (
-                  <li key={result.id}>
-                    foo
-                    {result.name}
-                    bar
-                  </li>
-                ))}
-              </ul>
-            </>
-          );
-        }}
-      </Lunr>
+      <>
+        <DebounceInput
+          minLength={2}
+          debounceTimeout={300}
+          onChange={e => this.setState({ query: e.target.value })}
+          value={this.state.query}
+        />
+        <div>
+          <Search query={this.state.query}>
+            {result =>
+              search_store[result.ref] && (
+                <img
+                  key={result.ref}
+                  width="100"
+                  height="75"
+                  src={`/static/photos/${search_store[result.ref].jpeg}`}
+                />
+              )
+            }
+          </Search>
+        </div>
+      </>
     );
   }
 }
