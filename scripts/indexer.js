@@ -16,13 +16,20 @@ const filenameRe = /^([0-9]{10,11})_.*_o.jpg$/;
 const filenameRe2 = /^.*_([0-9]+).*\.jpg$/;
 const storePhoto = filepath => {
   const jpeg = path.basename(filepath);
-  const id = (filenameRe.exec(jpeg) || filenameRe2.exec(jpeg))[1];
+  const idMatch = filenameRe.exec(jpeg) || filenameRe2.exec(jpeg);
+  if (idMatch === null) {
+    console.log(`Can't parse ${jpeg}`);
+    return undefined;
+  }
 
+  const id = idMatch[1];
   store[id] = {
     id,
     jpeg
   };
-  return fs.accessAsync(`static/data/photo_${id}.json`); // check related JSON file exists
+  return fs
+    .accessAsync(`static/data/photo_${id}.json`)
+    .catch(() => console.log(`static/data/photo_${id}.json not found`));
 };
 
 const saveStore = () =>
