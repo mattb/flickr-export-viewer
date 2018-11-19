@@ -28,16 +28,20 @@ const storePhoto = filepath => {
     id,
     jpeg
   };
-  const filename = `static/data/photo_${id}.json`;
+  const jsonFilename = `static/data/photo_${id}.json`;
   return fs
-    .accessAsync(filename)
     .then(() => sizeOf(filepath))
     .then(dimensions => {
       store[id] = { ...store[id], ...dimensions };
     })
+    .then(() => fs.readFileAsync(jsonFilename))
+    .then(json => JSON.parse(json))
+    .then(data => {
+      store[id] = { ...store[id], date: data.date_taken };
+    })
     .catch(() => {
       delete store[id];
-      console.log(`Problem processing ${filename}`);
+      console.log(`Problem processing ${filepath}`);
     });
 };
 
