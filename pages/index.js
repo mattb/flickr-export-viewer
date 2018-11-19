@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import 'isomorphic-fetch';
 import lunr from 'lunr';
 import { DebounceInput } from 'react-debounce-input';

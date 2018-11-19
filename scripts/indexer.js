@@ -1,6 +1,7 @@
 const Promise = require('bluebird');
 const lunr = require('lunr');
 const fs = Promise.promisifyAll(require('fs'));
+const sizeOf = Promise.promisify(require('image-size'));
 const path = require('path');
 const glob = Promise.promisify(require('glob'));
 
@@ -27,9 +28,17 @@ const storePhoto = filepath => {
     id,
     jpeg
   };
+  const filename = `static/data/photo_${id}.json`;
   return fs
-    .accessAsync(`static/data/photo_${id}.json`)
-    .catch(() => console.log(`static/data/photo_${id}.json not found`));
+    .accessAsync(filename)
+    .then(() => sizeOf(filepath))
+    .then(dimensions => {
+      store[id] = { ...store[id], ...dimensions };
+    })
+    .catch(() => {
+      delete store[id];
+      console.log(`Problem processing ${filename}`);
+    });
 };
 
 const saveStore = () =>
