@@ -32,3 +32,4 @@ static/data/*.json
 
 .*.sw*
 .next
+tags
